@@ -1,26 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Young+Serif&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Color Tokens from Figma */
+  --color-olive-darkest: #1D1D02;
+  --color-olive-dark: #38380B;
+  --color-olive-mid: #4F4E0F;
+  --color-olive-accent: #5E5D18;
+  --color-coral: #F36E3F;
+  --color-coral-hover: #e25b2a;
+  --color-cream: #F0EDCC;
+  --color-cream-soft: #f7f5e6;
+  --color-maroon: #6A1B2A;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  /* Font Families */
+  --font-serif: 'Young Serif', Georgia, serif;
+  --font-manrope: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Modern Webflow Easing Variables */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-circ: cubic-bezier(0, 0.55, 0.45, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Default theme */
+  --background: var(--color-olive-darkest);
+  --foreground: var(--color-cream);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  font-family: var(--font-manrope);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-olive-darkest);
+  color: var(--color-cream);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* Custom typography utilities */
+.font-serif-title {
+  font-family: var(--font-serif);
+}
+
+.font-manrope {
+  font-family: var(--font-manrope);
+}
+
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+.font-mono-tag {
+  font-family: var(--font-mono);
+}
+
+/* Color utilities */
+.bg-olive-darkest { background-color: var(--color-olive-darkest); }
+.bg-olive-dark { background-color: var(--color-olive-dark); }
+.bg-olive-mid { background-color: var(--color-olive-mid); }
+.bg-olive-accent { background-color: var(--color-olive-accent); }
+.bg-coral { background-color: var(--color-coral); }
+.bg-cream { background-color: var(--color-cream); }
+.bg-maroon { background-color: var(--color-maroon); }
+
+.text-olive-darkest { color: var(--color-olive-darkest); }
+.text-olive-dark { color: var(--color-olive-dark); }
+.text-olive-mid { color: var(--color-olive-mid); }
+.text-olive-accent { color: var(--color-olive-accent); }
+.text-coral { color: var(--color-coral); }
+.text-cream { color: var(--color-cream); }
+.text-maroon { color: var(--color-maroon); }
+
+.border-cream { border-color: var(--color-cream); }
+.border-coral { border-color: var(--color-coral); }
+.border-olive-accent { border-color: var(--color-olive-accent); }
+
+/* Webflow-style mask wrapper for text sliding up cleanly */
+.mask-wrap {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+/* Satisfying image hover zoom */
+.img-hover-zoom {
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  will-change: transform;
+}
+
+.img-hover-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Clean button transition */
+.btn-magnetic {
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.btn-magnetic:hover {
+  transform: translateY(-2px);
+}
+
+.btn-magnetic:active {
+  transform: translateY(0px);
+}
+
+/* Card hover lift */
+.card-hover-lift {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Marquee infinite scroll animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Subtle modal scale entrance */
+@keyframes modalScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal {
+  animation: modalScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #1D1D02;
+}
+::-webkit-scrollbar-thumb {
+  background: #4F4E0F;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F36E3F;
+}
+
+/* Nav Link Hover Underline (Webflow editorial style) */
+.nav-link-line {
+  position: relative;
+  display: inline-block;
+}
+.nav-link-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link-line:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Accordion Grid Animation */
+.accordion-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  opacity: 0;
+  overflow: hidden;
+}
+.accordion-wrapper.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.accordion-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Pulse glow for video play button */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(243, 110, 63, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 16px rgba(243, 110, 63, 0);
+  }
+}
+.animate-pulse-glow {
+  animation: pulseGlow 2.4s infinite cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Button shine sweep effect */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.btn-shine:hover::after {
+  transform: translateX(350%) rotate(25deg);
+}
+
